@@ -17,7 +17,9 @@ public class Rover {
         return y;
     }
 
-    ParserRover rover = new ParserRover();
+    public Character getCardinalValue() {
+        return cardinalValue;
+    }
 
     public Rover(int x, int y, Character cardinalValue) {
         this.x = x;
@@ -57,7 +59,4 @@ public class Rover {
         }
     }
 
-    public String finalPosition() {
-        return x + " " + y + " " + cardinalValue;
-    }
 }

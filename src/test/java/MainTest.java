@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MainTest {
 
@@ -43,15 +44,13 @@ public class MainTest {
     public void shouldReturnEmptyNotGivenMRLLetters(){
 
         main = new Main(5,5, 3,3,'S', "CCCCCCCCCC");
-
-        assertThat(main.moveRover(), equalTo(""));
+        assertThrows(RuntimeException.class, () -> { main.moveRover(); }, "Invalid coordinates letters");
     }
-
+    
     @Test
     public void testJustMCoordinates(){
 
         main = new Main(5,5, 3,3,'E', "MMMM");
-
-        assertThat(main.moveRover(), equalTo(""));
+        assertThrows(RuntimeException.class, () -> { main.moveRover(); }, "X and/or Y coordinates exceeded the the initial size of the rectangle");
     }
 }

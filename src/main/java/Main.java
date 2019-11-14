@@ -18,7 +18,7 @@ public class Main {
         this.commands = commands;
     }
 
-    public String moveRover() {
+    public String moveRover() throws RuntimeException {
 
         ParserRover parserRover = new ParserRover();
         boolean biggerCoodinates = parserRover.isCoordinatesPointerTooBig(xCoordinate, yCoordinate, width, height);
@@ -40,14 +40,15 @@ public class Main {
                     if (parserRover.isCoordinatesPointerTooBig(rover.getX(), rover.getY(), width, height))
                         rover.move();
                     else
-                        return "";
+                        throw new RuntimeException("X and/or Y coordinates exceeded the the initial size of the rectangle");
                 }
             } else {
-                return "";
+                throw  new RuntimeException("Invalid coordinates letters");
             }
         }
 
-        return rover.finalPosition();
+        return rover.getX() +" "+ rover.getY()+" "+rover.getCardinalValue();
 
     }
+
 }
