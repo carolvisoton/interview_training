@@ -1,4 +1,3 @@
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -6,45 +5,65 @@ import static org.junit.Assert.assertThat;
 
 public class RoverTest {
 
-    Rover rover;
 
     @Test
-    public void testRoverInPositionOneTwoNorth(){
+    public void shouldTurnLeftN(){
+        Rover rover = new Rover(5,5,'N');
+        rover.turnLeft();
+        assertThat(rover.finalPosition(), equalTo("5 5 W"));
+    }
 
-        rover = new Rover(5,5, 1,2,'N', "LMLMLMLMM");
 
-        assertThat(rover.moveRover(), equalTo("1 3 N"));
+    @Test
+    public void shouldTurnLeftS(){
+        Rover rover = new Rover(5,5,'S');
+        rover.turnLeft();
+        assertThat(rover.finalPosition(), equalTo("5 5 E"));
     }
 
     @Test
-    public void testRoverInPositionThreeThreeEast(){
-
-        rover = new Rover(5,5, 3,3,'E', "MMRMMRMRRM");
-
-        assertThat(rover.moveRover(), equalTo("5 1 E"));
+    public void shouldTurnLeftW(){
+        Rover rover = new Rover(5,5,'W');
+        rover.turnLeft();
+        assertThat(rover.finalPosition(), equalTo("5 5 S"));
     }
 
     @Test
-    public void shouldReturnEmptyGivenPositionOneTwoLetterA(){
+    public void shouldTurnLeftE(){
+        Rover rover = new Rover(5,5,'E');
+        rover.turnLeft();
+        assertThat(rover.finalPosition(), equalTo("5 5 N"));
+    }
 
-        rover = new Rover(5,5, 1,2,'A', "MMRMMRMRRM");
 
-        assertThat(rover.moveRover(), equalTo(""));
+    @Test
+    public void shouldTurnRightN(){
+        Rover rover = new Rover(5,5,'N');
+        rover.turnRight();
+        assertThat(rover.finalPosition(), equalTo("5 5 E"));
+    }
+
+
+    @Test
+    public void shouldTurnRightS(){
+        Rover rover = new Rover(5,5,'S');
+        rover.turnRight();
+        assertThat(rover.finalPosition(), equalTo("5 5 W"));
     }
 
     @Test
-    public void shouldReturnEmptyGivenCoordinatesBiggerThanRectangle(){
-
-        rover = new Rover(5,5, 6,7,'S', "MMRMMRMRRM");
-
-        assertThat(rover.moveRover(), equalTo(""));
+    public void shouldTurnRightW(){
+        Rover rover = new Rover(5,5,'W');
+        rover.turnRight();
+        assertThat(rover.finalPosition(), equalTo("5 5 N"));
     }
 
     @Test
-    public void shouldReturnEmptyNotGivenMRLLetters(){
-
-        rover = new Rover(5,5, 3,3,'S', "CCCCCCCCCC");
-
-        assertThat(rover.moveRover(), equalTo(""));
+    public void shouldTurnRightE(){
+        Rover rover = new Rover(5,5,'E');
+        rover.turnRight();
+        assertThat(rover.finalPosition(), equalTo("5 5 S"));
     }
+
+
 }

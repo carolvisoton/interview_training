@@ -1,83 +1,63 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Rover {
 
+    private final Map<Character, Character> mapL;
+    private final Map<Character, Character> mapR;
+    private int x;
+    private int y;
+    private Character cardinalValue;
 
-    private int width;
-    private int height;
-    private int xCoordinate;
-    private int yCoordinate;
-    private Character cardinalPoint;
-    private String commands;
-
-
-    public Rover(int width, int height, int xCoordinate, int yCoordinate, Character cardinalPoint, String commands) {
-        this.width = width;
-        this.height = height;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.cardinalPoint = cardinalPoint;
-        this.commands = commands;
+    public int getX() {
+        return x;
     }
 
-    public String moveRover() {
-        char newCardinalValue = 0;
-        String result = "";
+    public int getY() {
+        return y;
+    }
 
-        if (isCoordinatesPointerTooBig(xCoordinate, yCoordinate, width, height)
-                && isNSWE(cardinalPoint)) {
+    ParserRover rover = new ParserRover();
 
-            int newValueX = xCoordinate;
-            int newValueY = yCoordinate;
-            newCardinalValue = cardinalPoint;
+    public Rover(int x, int y, Character cardinalValue) {
+        this.x = x;
+        this.y = y;
+        this.cardinalValue = cardinalValue;
 
-            for (Character character : commands.toCharArray()) {
+        mapL = new HashMap<Character,Character>();
+        mapL.put('N', 'W');
+        mapL.put('S', 'E');
+        mapL.put('W', 'S');
+        mapL.put('E', 'N');
 
-                if (isLRM(character)) {
-                    if (character == 'M' && newCardinalValue == 'N') {
-                        newValueY++;
-                    } else if (character == 'M' && newCardinalValue == 'S') {
-                        newValueY--;
-                    } else if (character == 'M' && newCardinalValue == 'E') {
-                        newValueX++;
-                    } else if (character == 'M' && newCardinalValue == 'W') {
-                        newValueX--;
-                    } else if (character == 'L' && newCardinalValue == 'N') {
-                        newCardinalValue = 'W';
-                    } else if (character == 'R' && newCardinalValue == 'N') {
-                        newCardinalValue = 'E';
-                    } else if (character == 'L' && newCardinalValue == 'S') {
-                        newCardinalValue = 'E';
-                    } else if (character == 'R' && newCardinalValue == 'S') {
-                        newCardinalValue = 'W';
-                    } else if (character == 'L' && newCardinalValue == 'W') {
-                        newCardinalValue = 'S';
-                    } else if (character == 'R' && newCardinalValue == 'W') {
-                        newCardinalValue = 'N';
-                    } else if (character == 'L' && newCardinalValue == 'E') {
-                        newCardinalValue = 'N';
-                    } else if (character == 'R' && newCardinalValue == 'E') {
-                        newCardinalValue = 'S';
-                    }
+        mapR = new HashMap<Character,Character>();
+        mapR.put('N', 'E');
+        mapR.put('S', 'W');
+        mapR.put('W', 'N');
+        mapR.put('E', 'S');
+    }
 
-                    result = newValueX + " " + newValueY + " " + newCardinalValue;
-                }
-            }
+    public void turnLeft() {
+        cardinalValue = mapL.get(cardinalValue);
+    }
 
+    public void turnRight() {
+        cardinalValue = mapR.get(cardinalValue);
+    }
+
+    public void move() {
+        if (cardinalValue == 'N') {
+            y++;
+        } else if (cardinalValue == 'S') {
+            y--;
+        } else if (cardinalValue == 'E') {
+            x++;
+        } else if (cardinalValue == 'W') {
+            x--;
         }
-
-        return result;
-
     }
 
-    private boolean isCoordinatesPointerTooBig(int xCoordinate, int yCoordinate, int width, int height) {
-        return (width >= xCoordinate && height >= yCoordinate);
-    }
-
-
-    private boolean isNSWE(Character cardinalPoint) {
-        return (cardinalPoint == 'N' || cardinalPoint == 'S' || cardinalPoint == 'W' || cardinalPoint == 'E');
-    }
-
-    private boolean isLRM(Character character) {
-        return (character == 'L' || character == 'R' || character == 'M');
+    public String finalPosition() {
+        return x + " " + y + " " + cardinalValue;
     }
 }
